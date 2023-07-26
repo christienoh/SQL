@@ -1,0 +1,62 @@
+--create table with info about femtech leaders--
+CREATE TABLE femtech_leaders (
+id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, company TEXT, title TEXT);
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Tammy Sun", "Carrot Fertility", "Founder and CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Gina Bartasi", "Kindbody", "CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Maria Molland Selby", "Thinx", "CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Laura Modi", "Bobbie", "CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Laura Chambers", "Willow Innovations", "CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Ida Tin", "Clue", "CEO");
+INSERT INTO femtech_leaders (name, company, title) VALUES ("Frances Tang", "Awkward Essentials", "Founder and CEO");
+    
+SELECT * FROM femtech_leaders;
+
+--create table with info about the leaders' leisure activities--
+CREATE TABLE leisure (
+id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, activity TEXT, amt_per_week INTEGER, location TEXT);
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Tammy Sun", "swimming", 3, "pool");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Gina Bartasi", "running", 4, "track");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Maria Molland Selby", "walking", 5, "neighborhood");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Laura Modi", "pilates", 2, "home gym");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Laura Chambers", "boxing", 2, "boxing studio");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Ida Tin", "tennis", 2, "club");
+INSERT INTO leisure (name, activity, amt_per_week, location) VALUES ("Frances Tang", NULL, NULL, NULL);
+SELECT * FROM leisure;
+
+--table with info about the leaders' favorite restaurants and foods--
+CREATE TABLE foods (
+id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, restaurant TEXT, food TEXT);
+INSERT INTO foods (name, restaurant, food) VALUES ("Frances Tang", "Waffle House", "Eggs with toast");
+INSERT INTO foods (name, restaurant, food) VALUES ("Ida Tin", "Spruce", "Burger w/truffle fries");
+INSERT INTO foods (name, restaurant, food) VALUES ("Maria Molland Selby", "Daeho", "Kalbijjim");
+INSERT INTO foods (name, restaurant, food) VALUES ("Gina Bartasi", "Squat & Gobble", "Crepes");
+INSERT INTO foods (name, restaurant, food) VALUES ("Tammy Sun", "Lemonade LA", "Avocado Toast");
+INSERT INTO foods (name, restaurant, food) VALUES ("Laura Chambers", "Sushi Sheng", "Salmon Nigiri");
+INSERT INTO foods (name, restaurant, food) VALUES ("Laura Modi", "Frank's Outback", "Shrimp and Grits");
+select * from foods;
+
+/*--simple join 
+SELECT * FROM femtech_leaders, foods;
+*/
+
+--left outer join
+SELECT femtech_leaders.name as "Rockstar", femtech_leaders.title, foods.food as "Sustenance"
+    FROM femtech_leaders
+    LEFT OUTER JOIN foods
+    ON femtech_leaders.id;
+    
+--left outer join
+SELECT femtech_leaders.name as "Rockstar", femtech_leaders.title, foods.food as "Sustenance"
+    FROM femtech_leaders
+    LEFT OUTER JOIN foods
+    ON femtech_leaders.id
+    GROUP BY food
+    ORDER BY food asc;
+    
+--left outer join
+SELECT *
+FROM femtech_leaders
+LEFT JOIN foods
+ON femtech_leaders.name=foods.name
+ORDER BY company desc;
+
