@@ -7,10 +7,14 @@ INSERT into wine VALUES ("Dom P", 14, "sauv blanc", 16, 2009);
 INSERT into wine VALUES ("Dom P", 19, "brut rose", 67, 2015);
 
 --- display all wines order by price, high to low
-select * from wine ORDER BY price desc;
+SELECT *
+FROM wine
+ORDER BY price desc;
 
 --- display all wines, order by quantity
-select * from wine ORDER BY quantity;
+SELECT *
+FROM wine
+ORDER BY quantity;
 
 --- display average price of all the wines in the store
 SELECT AVG(price) "avg wine price"
