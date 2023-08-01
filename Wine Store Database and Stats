@@ -1,10 +1,10 @@
 --- create a wine store database
 CREATE TABLE wine (item text, quantity integer, varietal integer, price integer, year text); 
-INSERT into wine VALUES ("Beringer", 16, "pinot", 15, 2021);
-INSERT into wine VALUES ("Cake", 23, "sauv blanc", 29, 2019);
-INSERT into wine VALUES ("Kendall Jackson", 14, "sauv blanc", 10, 2022);
-INSERT into wine VALUES ("Dom P", 14, "sauv blanc", 16, 2009);
-INSERT into wine VALUES ("Dom P", 19, "brut rose", 67, 2015);
+INSERT into wine VALUES ("Beringer", 16, "Pinot", 15, 2021);
+INSERT into wine VALUES ("Cake", 23, "Sauvignon Blanc", 29, 2019);
+INSERT into wine VALUES ("Kendall Jackson", 14, "Sauvignon Blanc", 10, 2022);
+INSERT into wine VALUES ("Veuve Clicquot", 14, "Sauvignon Blanc", 56, 2009);
+INSERT into wine VALUES ("Veuve Clicquot", 19, "Brut Rose", 67, 2015);
 
 --- display all wines order by price, high to low
 SELECT *
