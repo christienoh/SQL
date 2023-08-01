@@ -1,35 +1,51 @@
 #In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data.
 
 ------------
+--Q: What kind of data does the customer table include?
+--Answer: order_id, acctnum
+SELECT *
+FROM customers limit 20;
+
+--Q: What columns are in the JanSales table?
+--A: orderID, Product, Quantity, price, orderdate, location
+SELECT * from JanSales limit 20;
+
+--Q: What column(s) do the customers table and the JanSales table have in common?
+--A: orderID
+SELECT * FROM customers
+WHERE length(order_id) = 6
+AND order_id <> 'Order ID';
+
 --How many orders were placed in January?
 --Answer: 9681 orders were placed in January
-SELECT count(ordered)
+SELECT count(orderid) as 'Total January Orders'
 FROM JanSales
 WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
--- How many of those orders were for an iPhone?
---Answer: 379 orders were for an iPhone, but there must be a more elegant way to find this out
-SELECT COUNT (ordered)
+--How many of those orders were for an iPhone?
+--Answer: 379 orders were for an iPhone
+SELECT count(orderID) 
 FROM JanSales
-WHERE Product = "iPhone"
-AND length(orderID) = 6
-AND orderID <> 'Order ID';
+WHERE Product = 'iPhone'
+  AND length(orderid) = 6
+  AND orderid <> 'Order ID';
 
 --Select the customer account numbers for all orders placed in February
 SELECT distinct customers.acctnum
 FROM FebSales
 LEFT JOIN customers
 ON FebSales.orderID = customers.order_id
-WHERE length(orderid) = 6
+   length(orderid) = 6
   AND orderid <> 'Order ID';
 
 --Which product was the cheapest one sold in January, and what was the price?
---Answer: AAA Batteries (4-pack), 2.99; this is correct, but the code from Charlotte accounts for any outliers
+--Answer: AAA Batteries (4-pack), 2.99
 SELECT distinct Product, min(price)
 FROM JanSales
 GROUP BY Product, price
-ORDER BY price ASC limit 1;
+ORDER BY price
+LIMIT 1;
 
 --What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products).
 SELECT product,
@@ -38,6 +54,7 @@ FROM JanSales
 where product <> ''
 GROUP BY Product;
 
+***PICK BACK UP HERE***
 --Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 SELECT Product, sum(Quantity) as Quantity,
        sum(Quantity)*price as Revenue
