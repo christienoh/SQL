@@ -1,1 +1,109 @@
+## I queried data from a digital media store that includes sales and customer info
 
+-- 1. Show Customers (full names, customer ID, and country) who are not in the US.
+SELECT FirstName, LastName, CustomerId, Country
+FROM customers
+WHERE Country <> 'USA';
+
+-- 2. Show only the Customers from Brazil.
+SELECT *
+    FROM customers
+        Where Country = 'Brazil';
+
+-- 3. Find the Invoices of customers who are from Brazil.
+SELECT customers.firstname, customers.lastname, invoices.invoiceid, invoices.invoicedate, invoices.billingcountry
+from invoices
+         join customers
+              on invoices.CustomerId = customers.CustomerId
+where BillingCountry = 'Brazil';
+
+-- 4. Show the Employees who are Sales Agents.
+SELECT * FROM employees
+WHERE Title LIKE '%AGENT%'
+    ;
+
+-- 5. Find a unique/distinct list of billing countries from the Invoice table.
+SELECT distinct BillingCountry
+FROM invoices;
+
+-- 6. Provide a query that shows the invoices associated with each sales agent.
+SELECT employees.FirstName, employees.LastName, invoices.invoiceid
+FROM employees
+         JOIN customers ON customers.SupportRepId = employees.EmployeeId
+         JOIN invoices ON invoices.CustomerId=customers.CustomerId;
+
+-- 7. Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
+SELECT e.FirstName as 'Employee First Name',
+       e.LastName as 'Employee Last Name',
+       c.FirstName as 'Customer First Name',
+       c.LastName as 'Customer Last Name',
+       c.country as 'Country',
+       i.total as 'Revenue'
+FROM employees e
+JOIN customers c ON e.EmployeeId = c.SupportRepId
+JOIN INVOICES i ON c.CustomerId = i.CustomerId
+;
+
+-- 8. How many Invoices were there in 2009?
+Select count(InvoiceId)
+from invoices
+where InvoiceDate like '2009%'
+
+-- 9. What are the total sales for 2009?
+select sum(Total)
+    from invoices
+        where InvoiceDate like '2009%';
+
+-- 10. Write a query that includes the purchased track name with each invoice line ID.
+SELECT tracks.Name as 'track name', invoice_items.invoiceid as 'invoice ID'
+from invoice_items
+join tracks
+on invoice_items.TrackId = tracks.TrackId;
+
+-- 11. Write a query that includes the purchased track name AND artist name with each invoice line ID.
+SELECT art.Name as Artist, t.Name as Track, i.invoicelineid
+from invoice_items i
+         join tracks t on i.TrackId = t.TrackId
+         join albums alb on t.AlbumId = alb.AlbumId
+         join artists art on alb.ArtistId = art.ArtistId;
+
+-- 12. Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+select t.Name as "Track Name", albums.Title as "Album Name", media_types.Name as "Media Type", genres.name as "Genre"
+from tracks t
+join genres on t.GenreId = genres.GenreId
+join albums on t.AlbumId = albums.AlbumId
+join media_types on t.MediaTypeId = media_types.MediaTypeId;
+
+-- 13. Show the total sales made by each sales agent.
+SELECT e.FirstName as "Agent First Name", e.lastname as "Agent Last Name",
+       round(sum(i.total), 2) as "Total Sales"
+FROM employees e
+         JOIN customers c on c.supportrepid = e.EmployeeId
+         JOIN invoices i on i.CustomerId = c.CustomerId
+WHERE e.Title = 'Sales Support Agent'
+GROUP BY e.FirstName, e.lastname
+;
+
+-- 14. Which sales agent made the most dollars in sales in 2009?
+SELECT emp.FirstName, emp.LastName,
+       ROUND(SUM(Inv.Total), 2) as 'Total Sales in 2009'
+FROM Employees emp
+         JOIN Customers cust
+              ON cust.SupportRepId = emp.EmployeeId
+         JOIN Invoices Inv
+              ON Inv.CustomerId = cust.CustomerId
+
+WHERE emp.Title = 'Sales Support Agent'
+AND InvoiceDate between '2009-01-01' AND '2009-12-31'
+GROUP BY emp.FirstName
+ORDER BY "Total Sales in 2009" DESC
+limit 1;
+
+-- 15. Which genre is the most popular (in terms of sales)?
+SELECT t.GenreId, sum(invoice_items.Quantity), g.Name
+FROM tracks t
+         JOIN invoice_items on t.TrackId = invoice_items.TrackId
+         JOIN genres g on t.GenreId = g.GenreId
+GROUP BY g.name
+ORDER BY sum(invoice_items.Quantity) DESC
+LIMIT 1;
