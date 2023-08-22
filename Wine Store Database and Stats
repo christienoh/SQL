@@ -1,21 +1,27 @@
+This query created a database with a table of inventory for a store named WPwine.
+
 --- create a wine store database
-CREATE TABLE wine (item text, quantity integer, varietal integer, price integer, year text); 
-INSERT into wine VALUES ("Beringer", 16, "Pinot", 15, 2021);
-INSERT into wine VALUES ("Cake", 23, "Sauvignon Blanc", 29, 2019);
-INSERT into wine VALUES ("Kendall Jackson", 14, "Sauvignon Blanc", 10, 2022);
-INSERT into wine VALUES ("Veuve Clicquot", 14, "Sauvignon Blanc", 56, 2009);
-INSERT into wine VALUES ("Veuve Clicquot", 19, "Brut Rose", 67, 2015);
+CREATE TABLE WPwine (item text, quantity integer, varietal integer, price integer, year text);
+INSERT into WPwine VALUES ('Beringer', 16, 'Pinot', 15, 2021);
+INSERT into WPwine VALUES ('Cake', 23, 'Sauvignon Blanc', 29, 2019);
+INSERT into WPwine VALUES ('Kendall Jackson', 14, 'Sauvignon Blanc', 10, 2022);
+INSERT into WPwine VALUES ('Veuve Clicquot', 14, 'Sauvignon Blanc', 56, 2009);
+INSERT into WPwine VALUES ('Veuve Clicquot', 19, 'Brut Rose', 67, 2015);
+INSERT into WPwine VALUES ('Rombauer', 22, 'Cabernet Sauvignon', 33, 2020);
+
+select *
+from WPwine;
 
 --- display all wines order by price, high to low
 SELECT *
-FROM wine
+FROM WPwine
 ORDER BY price desc;
 
 --- display all wines, order by quantity
 SELECT *
-FROM wine
+FROM WPwine
 ORDER BY quantity;
 
 --- display average price of all the wines in the store
 SELECT AVG(price) "avg wine price"
-FROM wine;
+FROM WPwine;
