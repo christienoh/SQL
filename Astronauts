@@ -386,7 +386,7 @@ INSERT INTO astronauts(Name,Year,GroupNum,Status,Birth_Date,Birth_Place,Gender,A
 SELECT gender,COUNT(*)FROM astronauts
 GROUP BY gender;
 
--- alma mater of astronauts --
+-- counted and grouped astronauts by alma mater --
 SELECT Alma_Mater,COUNT(*)FROM astronauts
 GROUP BY Alma_Mater;
 
@@ -395,29 +395,24 @@ SELECT * FROM astronauts
 WHERE status IN ("Active");
 
 -- first 3 results from table --
-SELECT * from astronauts limit 3;
+SELECT *
+from astronauts limit 3;
 
 -- max number of space flights --
-SELECT MAX (Space_Flights) AS "Max No. of Space Flights" FROM astronauts;
+SELECT MAX (Space_Flights) AS "Max No. of Space Flights"
+FROM astronauts;
 
 -- group by undergrad major --
 SELECT Undergraduate_Major,
-COUNT(*)
+       COUNT(*)
 FROM astronauts
 GROUP BY Undergraduate_Major;
 
 -- group by graduate major --
 SELECT Graduate_Major,
-COUNT(*)
+       COUNT(*)
 FROM astronauts
 GROUP BY Graduate_Major;
-
--- max age --
-SELECT MAX(birth_date)
-FROM astronauts;
-
-SELECT MIN(birth_date)
-from astronauts;
 
 -- deceased astronauts, ordered by undergraduate major --
 Select *
@@ -427,23 +422,25 @@ ORDER BY Undergraduate_Major;
 
 -- Rank astronauts by # of hours --
 SELECT name,
-    CASE WHEN Space_Flight_hr > 1500 THEN "Awesome"
-    WHEN Space_Flight_hr > 1000 THEN "Great"
-    WHEN Space_Flight_hr < 200 THEN "Good"  
-    ELSE "Okay"
-    END AS "Rank"
-    FROM astronauts
-    ORDER BY Rank;
-    
+       CASE WHEN Space_Flight_hr > 1500 THEN 'Awesome'
+            WHEN Space_Flight_hr > 1000 THEN 'Great'
+            WHEN Space_Flight_hr < 200 THEN 'Good'
+            ELSE 'Okay'
+           END AS 'Rank'
+FROM astronauts
+ORDER BY 'Rank';
 
 -- Min, Max and Average space walk hours --
-SELECT AVG(Space_Walks_hr)
-FROM astronauts;
-
 SELECT MIN(Space_Walks_hr)
 FROM astronauts;
 
---
+SELECT MAX(Space_Walks_hr)
+FROM astronauts;
+
+SELECT AVG(Space_Walks_hr)
+FROM astronauts;
+
+-- Name, Date of Death, Alma Mater --
 SELECT Name, Death_Date, Alma_Mater AS "SCHOOL"
 FROM astronauts
 GROUP BY Alma_Mater;
