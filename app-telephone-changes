@@ -1,0 +1,6 @@
+/* I wrote this query to find user telephone numbers that do not match the preferred format of (XXX) XXX-XXXX
+
+SELECT *
+FROM "client-telephone-changes"
+WHERE "client-telephone-changes".app_value NOT GLOB REPLACE('(XXX) XXX-XXXX', 'X', '[0-9]')
+;
