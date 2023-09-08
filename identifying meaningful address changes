@@ -1,0 +1,5 @@
+select * from "HA-location"
+where leftstr(app_value, 6) != leftstr(new_value, 6);
+
+select * from "HA-location"
+where rightstr(app_value, 6) != rightstr(new_value, 6);
